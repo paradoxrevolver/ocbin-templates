@@ -1,0 +1,702 @@
+/* reset.css, with modifications by me */
+#pr {
+	/* http://meyerweb.com/eric/tools/css/reset/ 
+	v2.0 | 20110126
+	License: none (public domain)
+	*/
+	
+	/*	http://rubic.cc/
+	Edited by paradoxrevolver aka rubic
+	2019.01.22
+	*/
+	html, body, div, span, applet, object, iframe,
+	h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+	a, abbr, acronym, address, big, cite, code,
+	del, dfn, em, img, ins, kbd, q, s, samp,
+	small, strike, strong, sub, sup, tt, var,
+	b, u, i, center,
+	dl, dt, dd, ol, ul, li,
+	fieldset, form, label, legend,
+	table, caption, tbody, tfoot, thead, tr, th, td,
+	article, aside, canvas, details, embed, 
+	figure, figcaption, footer, header, hgroup, 
+	menu, nav, output, ruby, section, summary,
+	time, mark, audio, video {
+		margin: 0;
+		padding: 0;
+		border: 0;
+		font-size: 100%;
+		font: inherit;
+		vertical-align: baseline;
+	}
+	a {
+		display: inline-block;
+	}
+	/* HTML5 display-role reset for older browsers */
+	article, aside, details, figcaption, figure, 
+	footer, header, hgroup, menu, nav, section {
+		display: block;
+	}
+	html, body {
+		line-height: 1;
+		height: 100%;
+		width: 100%;
+	}
+	ol, ul {
+		list-style: none;
+	}
+	blockquote, q {
+		quotes: none;
+	}
+	blockquote:before, blockquote:after,
+	q:before, q:after {
+		content: '';
+		content: none;
+	}
+	table {
+		border-collapse: collapse;
+		border-spacing: 0;
+	}
+}
+
+/* media queries */
+@sm: ~"only screen and (max-width: 767px)";
+@xs: ~"only screen and (max-width: 425px)";
+
+@fnt-title-xs: 	bold 9pt "Sanchez", serif;
+@fnt-title-sm: 	bold 10pt "Sanchez", serif;
+@fnt-title-lg: 	16pt "Sanchez", serif;
+@fnt-title-xl: 	24pt "Sanchez", serif;
+@fnt-body-sm: 	10pt "Rubik", sans-serif;
+@fnt-body-md: 	11pt "Rubik", sans-serif;
+
+@white: #ffffff;
+@darkgray: #1b1d22;
+@gray: #24262a;
+@lightgray: #676a71;
+
+@time-fly-in-speed: 1.0s;
+@time-fly-in-stagger: 0.3s;
+@time-hover-fade-speed: 0.4s;
+@time-highlight-border-speed: 0.33s;
+
+@px-border-radius: 3px;
+@px-portrait-border-width: 4px;
+@px-left-item-width: 150px;
+@px-thumbnail-length: 100px;
+@px-gallery-button-width: 40px;
+@px-rpg-stat-width: 100px;
+@px-owner-avatar-width: 50px;
+
+@sp-xxs: @sp-xs / 2;
+@sp-xs: 6px;
+@sp-sm: 10px;
+@sp-md: 14px;
+@sp-lg: @sp-sm * 2;
+@sp-xl: @sp-md * 2;
+
+/* CHANGES TO PRE-EXISTING ELEMENTS */
+.core {
+	background-color: @gray;
+	
+	/* needs to be a flex so that #pr can stretch vertically */
+	display: flex;
+	flex-flow: column nowrap;
+	
+	.core-top, .core-footer {
+		background-color: @darkgray;
+	}
+	
+	.core-footer {
+		font: @fnt-body-sm;
+	}
+}
+
+#pr {
+	box-sizing: border-box;
+	position: relative;
+	
+	/* fill the entire content space */
+	width: 100%;
+	flex: 1 0 0;
+	
+	font: @fnt-body-md;
+	color: @white;
+	
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	
+	padding: @sp-sm;
+	
+	img { border-radius: @px-border-radius; }
+	a { color: @white; }
+	em { font-style: italic; }
+	
+	/* set transition time on elements */
+	a, .island, .subtitle, .button {
+		transition-duration: @time-hover-fade-speed;
+	}
+	
+	/* fixes html whitespace between parent and image */
+	.image { line-height: 0; }
+	/* images that need to resize themselves */
+	.featured img, .sheet img { width: 100%; }
+	
+	.page {
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: center;
+		
+		/* so island animations from the side don't
+		create scroll bars */
+		overflow-x: hidden;
+	}
+	
+	.content {
+		/* content sits above the background */
+		z-index: 1;
+		
+		flex: 0 1 960px;
+		
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: center;
+	}
+	
+	.column {
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: flex-start;
+		align-content: flex-start;
+		
+		@media @sm {
+			justify-content: center;
+		}
+		
+		/* mixin and loop for staggering island animations */
+		.stagger(@i) when (@i > 0) {
+			> :nth-child(@{i}) {
+				animation-delay: @time-fly-in-stagger * sqrt(@i);
+			}
+			.stagger(@i - 1);
+		}
+		/* first 10 children are given staggered animation delays */
+		.stagger(10);
+	}
+	
+	/* column resizing */
+	.column.left { flex: 0 0 200px;	}
+	.column.right { flex: 1 1 0; }
+	@media @sm {
+		/* columns move on top of each other */
+		.content { flex-flow: column nowrap; }
+		.column.left { flex: 1 1 0;	}
+	}
+	
+	/* islands are bordered and fly around the place */
+	.island {
+		position: relative;
+		box-sizing: border-box;
+		background-color: @darkgray;
+		border: 1px white solid;
+		border-radius: @px-border-radius;
+		padding: @sp-sm;
+		margin: @sp-sm;
+		flex: 1 1 100%;
+		
+		/* special border case for portrait island */
+		&.portrait {
+			border: @px-portrait-border-width white double;
+			border-radius: @px-portrait-border-width + @px-border-radius;
+		}
+		
+		&:hover {
+			.subtitle, a {
+				color: var(--highlight);
+			}
+			/* button links shouldn't turn the highlight color */
+			.button a {
+				color: @white;
+			}
+		}
+		
+		a:hover {
+			color: @white;
+		}
+		
+		/* ISLAND SLIDING ANIMATIONS */
+		animation-duration: @time-fly-in-speed;
+		animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+		animation-fill-mode: backwards;
+		&.left {
+			animation-name: slideInFromLeft;
+		}
+		&.right {
+			animation-name: slideInFromRight;
+		}
+		@keyframes slideInFromLeft {
+			from {
+				right: calc(100vw);
+			}
+			to {
+				right: 0%;
+			}
+		}
+		@keyframes slideInFromRight {
+			from {
+				left: calc(100vw);
+			}
+			to {
+				left: 0%;
+			}
+		}
+		
+		/* ISLAND BORDER DRAW ANIMATIONS */
+		/* this is a psuedo-element that is the colored border we'll draw */
+		&::before {
+			content: "";
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			/* adjust by one pixel to accomodate border's width*/
+			left: -1px;
+			top: -1px;
+			z-index: 20;
+			/* draw the border itself... this is hidden until user hover's over island */
+			border: 1px var(--highlight) solid;
+			border-radius: @px-border-radius;
+			/* make sure the pseudo-element can't be clicked */
+			pointer-events: none;
+			/* play the drawing in reverse, destroying the highlight border */
+			animation: borderErase @time-highlight-border-speed ease-out 0s forwards;
+		}
+		/* on hover play the border draw, fade out the old border*/
+		&:hover::before {
+			/* play the drawing forwards, revealing the highlight border */
+			animation: borderDraw @time-highlight-border-speed ease-out 0s backwards;
+		}
+		&:hover {
+			border: 1px rgba(255, 255, 255, 0) solid;
+		}
+		/* special cases for the double line border on the portrait*/
+		&.portrait::before {
+			border-style: double;
+			border-width: @px-portrait-border-width;
+			border-radius: @px-border-radius + @px-portrait-border-width;
+			left: -1 * @px-portrait-border-width;
+			top: -1 * @px-portrait-border-width;
+		}
+		&.portrait:hover {
+			border: @px-portrait-border-width rgba(255, 255, 255, 0) double;
+		}
+		@keyframes borderDraw {
+			0% {
+				clip-path: polygon(50% 50%, -50% -50%, -50% -50%, -50% -50%, -50% -50%, -50% -50%);
+			}
+			25% {
+				clip-path: polygon(50% 50%, -50% -50%, 150% -50%, 150% -50%, 150% -50%, 150% -50%);
+			}
+			50% {
+				clip-path: polygon(50% 50%, -50% -50%, 150% -50%, 150% 150%, 150% 150%, 150% 150%);
+			}
+			75% {
+				clip-path: polygon(50% 50%, -50% -50%, 150% -50%, 150% 150%, -50% 150%, -50% 150%);
+			}
+			100% {
+				clip-path: polygon(50% 50%, -50% -50%, 150% -50%, 150% 150%, -50% 150%, -50% -50%);
+			}
+		}
+		@keyframes borderErase {
+			100% {
+				clip-path: polygon(50% 50%, -50% -50%, -50% -50%, -50% -50%, -50% -50%, -50% -50%);
+			}
+			75% {
+				clip-path: polygon(50% 50%, -50% -50%, 150% -50%, 150% -50%, 150% -50%, 150% -50%);
+			}
+			50% {
+				clip-path: polygon(50% 50%, -50% -50%, 150% -50%, 150% 150%, 150% 150%, 150% 150%);
+			}
+			25% {
+				clip-path: polygon(50% 50%, -50% -50%, 150% -50%, 150% 150%, -50% 150%, -50% 150%);
+			}
+			0% {
+				clip-path: polygon(50% 50%, -50% -50%, 150% -50%, 150% 150%, -50% 150%, -50% -50%);
+			}
+		}
+	}
+	
+	/* for the typical button (not just any link) */
+	.button {
+		border: 1px white solid;
+		border-radius: @px-border-radius;
+		text-align: center;
+		
+		a {
+			display: inline-block;
+			padding: 3px 5px;
+			font: @fnt-body-sm;
+		}
+		
+		&:hover {
+			background-color: @lightgray;
+		}
+	}
+	
+	/* for items, which are typically a title and some text */
+	.item {
+		display: flex;
+		flex-flow: row nowrap;
+		
+		margin-top: @sp-xs;
+		
+		.left {
+			flex: 0 1 25%;
+			text-align: right;
+			font: @fnt-body-sm;
+			text-transform: uppercase;
+			/* this better aligns the left to right text */
+			margin-top: 2px;
+		}
+		
+		.right {
+			flex: 1 1 0;
+			margin-left: @sp-sm;
+			word-break: break-word;
+		}
+	}
+	@media @sm {
+		.item {
+			flex-flow: column nowrap;
+			
+			.left {
+				flex: 1 1 0;
+				text-align: left;
+			}
+		}
+	}
+	
+	/* subtitles appear at the top of each island */
+	.subtitle {
+		font: @fnt-title-sm;
+		text-transform: uppercase;
+		margin-bottom: @sp-sm;
+	}
+	
+	.portrait {
+		text-align: center;
+		/* this is one of the only blocks that stays a consistent
+		width everywhere it appears. */
+		flex: 0 0 228px;
+		
+		.name {
+			margin-top: @sp-sm;
+			font: @fnt-title-lg;
+			text-transform: uppercase;
+		}
+		.title {
+			font: @fnt-title-sm;
+			text-transform: uppercase;
+		}
+		.quote {
+			margin-top: @sp-xs;
+		}
+	}
+	
+	.signature {
+		.owner a {
+			display: flex;
+			flex-flow: row wrap;
+			
+			.image {
+				display: flex;
+				flex-flow: column nowrap;
+				justify-content: center;
+				
+				img {
+					height: 50px;
+					margin-right: @sp-sm;
+				}
+			}
+			
+			.name {
+				font: @fnt-title-lg;
+				margin: @sp-xs 0;
+				flex: 1 1 0;
+				align-self: center;
+			}
+		}
+		
+		.flair {
+			margin-top: @sp-sm;
+			margin-right: @sp-xs;
+		}
+		
+		.text {
+			margin-top: @sp-sm;
+			font: @fnt-body-sm;
+		}
+	}
+	
+	.featured {
+		.image, a, img {
+			width: 100%;
+		}
+	}
+	
+	/* flair divs are generated by the {owner_flair} template */
+	/* but i also use this style elsewhere */
+	.flair {
+		box-sizing: border-box;
+		display: inline-block;
+		
+		padding: 3px 6px;
+		border-radius: @px-border-radius;
+		
+		background-color: @white;
+		color: @darkgray;
+		
+		font: @fnt-title-xs;
+		text-transform: uppercase;
+	}
+	
+	.tags {
+		.list {
+			display: flex;
+			flex-flow: row wrap;
+			margin: -1 * @sp-xxs;
+			
+			.tag {
+				flex: 0 0 auto;
+				margin: @sp-xxs;
+				display: flex;
+				
+				a {
+					flex: 1 1 0;
+					padding: @sp-xs;
+				}
+			}
+			
+			@media @sm {
+				.tag {
+					/* keeps tags in roughly two columns */
+					flex: 1 0 40%;
+				}
+			}
+		}
+	}
+	
+	.colors {
+		.palette {
+			display: flex;
+			flex-flow: column nowrap;
+			margin: -1 * @sp-xxs;
+			
+			@media @sm {
+				flex-flow: row wrap;
+			}
+			
+			.color {
+				display: flex;
+				flex-flow: row wrap;
+				justify-content: flex-end;
+				margin: @sp-xxs;
+				
+				@media @sm {
+					flex: 1 1 200px;
+				}
+				
+				.name {
+					text-align: right;
+				}
+				
+				.bg {
+					width: 72px;
+					padding: 3px;
+					border-radius: @px-border-radius;
+					margin-left: @sp-xs;
+					
+					.hex {
+						font: @fnt-title-xs;
+						font-weight: normal;
+						text-transform: uppercase;
+						text-align: center;
+						.text-border(1.3px, black);
+					}
+				}
+			}
+		}
+	}
+	
+	.sheet {
+		.image {
+			display: flex;
+			justify-content: center;
+		}
+	}
+	
+	.summary {
+		.heading {
+			display: flex;
+			flex-flow: row wrap;
+			align-items: flex-start;
+			
+			.subtitle {
+				margin-right: auto;
+			}
+			
+			.flair {
+				margin: 0 @sp-xs @sp-xs;
+			}
+			
+			.views {
+				margin: 2px @sp-xs @sp-xs;
+			}
+			
+			@media @sm {
+				.subtitle {
+					flex: 0 0 100%;
+				}
+				
+				.flair {
+					margin-left: 0;
+				}
+				
+				.views {
+					flex-flow: row nowrap;
+					margin-left: auto;
+				}
+			}
+		}
+	}
+	
+	.rpg {
+		.stats {
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			flex-flow: row wrap;
+			
+			.wrapper {
+				flex: 1 0 15%;
+				
+				display: flex;
+				flex-flow: row nowrap;
+				justify-content: center;
+				
+				@media @sm {
+					flex: 1 0 30%;
+				}
+				
+				.stat {
+					position: relative;
+					border: 1px solid @white;
+					border-radius: @px-border-radius;
+					
+					display: flex;
+					flex-flow: column nowrap;
+					align-items: center;
+					
+					width: 50px;
+					height: 50px;
+					
+					margin: @sp-xs;
+					
+					.left {
+						font: @fnt-body-sm;
+						text-transform: uppercase;
+						position: absolute;
+						top: -8px;
+						.text-border(1.3px, @darkgray);
+						
+						/* this is a tiny black box behind the
+						text to hide borders */
+						&::before {
+							content: '';
+							display: block;
+							width: calc(100% - 6px);
+							height: 10px;
+							background-color: @darkgray;
+							position: relative;
+							top: 3px;
+							left: 2px;
+						}
+						
+						p {
+							position: relative;
+							top: -10px;
+						}
+					}
+					
+					.right {
+						font: @fnt-title-xl;
+						margin-top: 5px;
+					}
+				}
+			}
+		}
+	}
+	
+	/* this is for that dumb text border, using text shadows */
+	.text-border(@px-width, @color) {
+		text-shadow: @px-width 0px @color, 
+			@px-width @px-width @color, 
+			0px @px-width @color, 
+			-1 * @px-width @px-width @color, 
+			-1 * @px-width 0px @color, 
+			0px -1 * @px-width @color, 
+			@px-width -1 * @px-width @color, 
+			@px-width 0px @color, 
+			@px-width @px-width @color, 
+			0px @px-width @color, 
+			-1 * @px-width @px-width @color, 
+			-1 * @px-width 0px @color, 
+			0px -1 * @px-width @color, 
+			@px-width -1 * @px-width @color;
+	}
+	
+	/* BACKGROUND MANAGEMENT */
+	.background {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+		pointer-events: none;
+		
+		.star-bg {
+			position: absolute;
+			height: calc(100% + 1000px);
+			width: calc(100% + 2000px);
+			bottom: 0;
+			right: 0;
+			image-rendering: pixelated;
+			animation-name: drift;
+			animation-timing-function: linear;
+			animation-iteration-count: infinite;
+			
+			@keyframes drift {
+				0% {
+					bottom: 0;
+					right: 0;
+				}
+				100% {
+					bottom: -1000px;
+					right: -2000px;
+				}
+			}
+			
+			&.dim {
+				background: url("https://ocbin.s3.us-west-2.amazonaws.com/images/382-7-yra8K.png") repeat;
+				animation-duration: 220s;
+			}
+			&.small {
+				background: url("https://ocbin.s3.us-west-2.amazonaws.com/images/381-7-y7vBF.png") repeat;
+				animation-duration: 160s;
+			}
+			&.big {
+				background: url("https://ocbin.s3.us-west-2.amazonaws.com/images/377-7-fRfeI.png") repeat;
+				animation-duration: 100s;
+			}
+		}
+	}
+}

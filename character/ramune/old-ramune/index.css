@@ -1,0 +1,733 @@
+/*! normalize.css v8.0.0 | MIT License | github.com/necolas/normalize.css */html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}h1{font-size:2em;margin:.67em 0}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details{display:block}summary{display:list-item}template{display:none}[hidden]{display:none}
+
+/*************/
+/* VARIABLES */
+
+:root {
+	--titlefont: "Righteous", sans-serif;
+	--bodyfont: "Raleway", Ariel, sans-serif;
+	
+	/* header and footer colors */
+	--blue: #34487d;
+	/* slightly darker than the darkest part of the bg*/
+	--darkercyan: #307CBF;
+	/* four main background colors */
+	--darkcyan: #3b8dd1;
+	--cyan: #5aa8d9;
+	--lightcyan: #70c8e3;
+	--lightercyan: #89e9f0;
+	/* in case the white highlight needs to be adjusted*/
+	--white: #ffffff;
+	
+	--left-side-width: 220px;
+	--thumbnail-length: 100px;
+	--header-height: 30px;
+	--footer-height: 30px;
+	--border-radius: 5px;
+	--spacing-sm: 5px;
+	--spacing-md: 8px;
+	--spacing-lg: calc( var(--spacing-sm)*2 );
+	
+	--transition-speed: 0.175s;
+}
+
+
+
+
+
+
+/*******************/
+/* GENERAL CHANGES */
+
+div, p, a, .sbcheader-item {
+	font-family: var(--bodyfont);
+}
+
+#pr {
+	/* #pr grows to fill the entire space between header and footer */
+	flex-grow: 1;
+	/* put it behind everything */
+	z-index: 0;
+	background-color: var(--lightercyan);
+	/* necessary for the background images*/
+	position: relative;
+	overflow: hidden;
+	/* give the header and footer some space */
+	padding: var(--spacing-lg);
+}
+
+#pr * {
+	font-size: 10pt;
+	color: var(--white);
+	
+	transition-duration: var(--transition-speed);
+}
+
+#pr a, #pr a * {
+	color: var(--cyan);
+}
+
+#pr a:hover, #pr a:hover * {
+	color: var(--white);
+}
+
+#pr .image, #pr .image a, #pr .image img {
+	/* should fix weird link and image spacing problems*/
+	font-size: 0pt;
+	display: block;
+	/* make images the parent's width and not enormous */
+	width: 100%;
+}
+
+#pr .image img {
+	border-radius: var(--border-radius);
+}
+
+#pr .island {
+	margin: 0 var(--spacing-sm) var(--spacing-lg) var(--spacing-sm);
+	padding: var(--spacing-md);
+	background-color: var(--blue);
+	border-radius: var(--border-radius);
+}
+
+/* rows that deserve to be the entire width of their parent */
+#pr #top-half, #pr #bottom-half {
+	width: 100%;
+}
+
+#pr #main-col {
+	z-index: 1;
+	width: 1000px;
+}
+
+#pr #left-side {
+	width: var(--left-side-width);
+}
+
+#pr #right-side {
+	/* right side should take up all the space it can to fill the main column */
+	flex-grow: 1;
+}
+
+#pr #details {
+	/* details box specifically gets a larger padding */
+	padding: var(--spacing-lg);
+}
+
+#pr .subtitle {
+	/* make the subtitle text bold */
+	font-family: var(--titlefont);
+	text-transform: uppercase;
+}
+
+#pr .content-box:not(:nth-child(2)) {
+	margin-top: var(--spacing-md);
+}
+
+#pr .content {
+	margin-top: var(--spacing-sm);
+}
+
+
+
+
+
+
+
+/**********************/
+/* CHARACTER PORTRAIT */
+
+#pr #portrait, #pr #portrait img {
+	border-radius: 50%;
+}
+
+
+
+
+
+
+
+
+/*****************/
+/* OWNER DETAILS */
+
+#pr #signature-owner-avatar img {
+	width: 50px;
+	border-radius: 50%;
+	margin-right: var(--spacing-md);
+}
+
+#pr #signature-owner:hover {
+	color: var(--white);
+}
+
+#pr #signature-owner-name a {
+	/* make a bolder font */
+	font-family: var(--titlefont);
+	font-size: 16pt;
+	/* shift up just a bit */
+	position: relative;
+	top: -2px;
+}
+
+
+
+
+
+
+
+/****************/
+/* TAB CHANGING */
+
+#pr input, #pr .details {
+	/* by default, the radio inputs and detail blocks do not appear*/
+	display: none;
+}
+
+#pr #input-main:checked ~         #right-side #details #main,
+#pr #input-character:checked ~    #right-side #details #character,
+#pr #input-body:checked ~         #right-side #details #body,
+#pr #input-personality:checked ~  #right-side #details #personality,
+#pr #input-lifestyle:checked ~    #right-side #details #lifestyle,
+#pr #input-rpg:checked ~          #right-side #details #rpg {
+	/* as long as a radio input is active, that specific block does appear */
+	display: block;
+}
+
+#pr #tab-list label {
+	/* maintain the label width */
+	box-sizing: border-box;
+	width: calc( var(--left-side-width) - var(--spacing-lg) );
+	
+	/* make the button feel clickable */
+	cursor: pointer;
+	
+	/* make the label text bold */
+	font-family: var(--titlefont);
+	text-transform: uppercase;
+	text-align: right;
+}
+
+#pr #tab-list label:hover {
+	/* make the button lighter when hovered over*/
+	background-color: var(--darkcyan);
+}
+
+#pr #tab-list label:active {
+	/* button reacts early, on use mouse press */
+	background-color: var(--white);
+	color: var(--cyan);
+}
+
+#pr #input-main:checked ~         #left-side #tab-list .input-main,
+#pr #input-character:checked ~    #left-side #tab-list .input-character,
+#pr #input-body:checked ~         #left-side #tab-list .input-body,
+#pr #input-personality:checked ~  #left-side #tab-list .input-personality,
+#pr #input-lifestyle:checked ~    #left-side #tab-list .input-lifestyle,
+#pr #input-rpg:checked ~          #left-side #tab-list .input-rpg {
+	/* as long as a radio input is active, that specific block does appear */
+	background-color: var(--white);
+	color: var(--blue);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/********************/
+/* CHARACTER HEADER */
+
+#pr #character-header {
+	padding-left: var(--spacing-lg);
+	padding-right: var(--spacing-lg);
+}
+
+#pr #nametag a {
+	font-family: var(--titlefont);
+	text-transform: uppercase;
+	line-height: 1;
+}
+
+#pr #nametag-name a {
+	font-size: 28pt;
+}
+
+#pr #nametag-title a {
+	font-size: 14pt;
+}
+
+#pr #nametag-quote p {
+	font-style: italic;
+	font-size: 11pt;
+	
+	margin-top: var(--spacing-sm);
+}
+
+
+
+
+
+
+
+
+
+
+/***************/
+/* TAB CONTENT */
+
+#pr .item {
+	display: flex;
+	flex-flow: row nowrap;
+	margin-top: var(--spacing-sm);
+}
+
+#pr .item > {
+	line-height: 1.3;
+}
+
+#pr .item-left {
+	min-width: 165px;
+	font-weight: bold;
+	font-size: 10pt;
+	text-transform: uppercase;
+	text-align: right;
+	margin-right: var(--spacing-md);
+	margin-top: 1px;
+}
+
+#pr .item-right, #pr #description-text {
+	font-size: 11pt;
+}
+
+
+
+/* TAGS */
+#pr #description {
+	flex: 2 1 0;
+}
+
+
+#pr #tags {
+	margin-left: var(--spacing-lg);
+	margin-top: var(--spacing-md);
+	flex: 1 1 0;
+}
+
+#pr .template-tag {
+	margin-right: var(--spacing-md);
+	margin-bottom: var(--spacing-md);
+}
+
+
+
+
+/* PALETTE */
+#pr .template-color {
+	/* center everything in a color block */
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+	
+	width: 75px;
+}
+
+#pr .color {
+	width: 20px;
+	height: 20px;
+	padding: 10px;
+	border: 2px solid var(--white);
+	border-radius: 50%;
+}
+
+#pr .color-name {
+	top: 5pt;
+	
+	font-size: 8pt;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+#pr .color-hex {
+	top: -5pt;
+	
+	font-family: var(--titlefont);
+	font-size: 8pt;
+	text-transform: uppercase;
+}
+
+#pr .color-name, #pr .color-hex {
+	min-width: auto;
+	position: relative;
+	margin: 0;
+	z-index: 2;
+	text-align: center;
+	text-shadow:  1.3px 0px var(--blue), 
+		1.3px 1.3px var(--blue), 
+		0px 1.3px var(--blue), 
+		-1.3px 1.3px var(--blue), 
+		-1.3px 0px var(--blue), 
+		0px -1.3px var(--blue), 
+		1.3px -1.3px var(--blue),  
+		1.3px 0px var(--blue), 
+		1.3px 1.3px var(--blue), 
+		0px 1.3px var(--blue), 
+		-1.3px 1.3px var(--blue), 
+		-1.3px 0px var(--blue), 
+		0px -1.3px var(--blue), 
+		1.3px -1.3px var(--blue);
+}
+
+
+#pr .color-name:before, #pr .color-hex:before {
+	/* all this does is prevent the circle from appearing behind the text */
+	width: calc(100% - 4px);
+	height: calc(100% - 3px);
+	content: '';
+	background-color: var(--blue);
+	position: absolute;
+	top: 1px;
+	left: 2px;
+	z-index: -1;
+}
+
+
+
+
+
+
+
+
+
+/* RPG ATTRIBUTES */
+#pr .rpg-stat {
+	/* center the rpg details */
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#pr .rpg-stat .item-left {
+	min-width: auto;
+	position: relative;
+	margin: 0;
+	z-index: 1;
+	font-weight: bold;
+	text-shadow:  1.3px 0px var(--blue), 
+		1.3px 1.3px var(--blue), 
+		0px 1.3px var(--blue), 
+		-1.3px 1.3px var(--blue), 
+		-1.3px 0px var(--blue), 
+		0px -1.3px var(--blue), 
+		1.3px -1.3px var(--blue),  
+		1.3px 0px var(--blue), 
+		1.3px 1.3px var(--blue), 
+		0px 1.3px var(--blue), 
+		-1.3px 1.3px var(--blue), 
+		-1.3px 0px var(--blue), 
+		0px -1.3px var(--blue), 
+		1.3px -1.3px var(--blue);
+}
+
+#pr .rpg-stat .item-left:before {
+	/* all this does is prevent the circle from appearing behind the text */
+	width: calc(100% - 4px);
+	height: 15px;
+	content: '';
+	background-color: var(--blue);
+	position: absolute;
+	top: 0;
+	left: 2px;
+	z-index: -1;
+}
+
+#pr .rpg-stat .item-right {
+	/* center the text */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	
+	/* push the circle up into the text*/
+	position: relative;
+	top: -10px;
+	
+	/* put it in a circle */
+	width: 45px;
+	height: 45px;
+	border: 2px solid var(--white);
+	border-radius: 50%;
+}
+
+#pr .rpg-stat .item-right p {
+	margin-top: 1px;
+	font-family: var(--titlefont);
+	font-size: 20pt;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/***********/
+/* GALLERY */
+
+#pr #gallery {
+	margin-bottom: 0;
+}
+
+/* button in subtitle shouldn't have any margins */
+#pr #gallery .subtitle .pr-button,
+#pr #gallery .subtitle .pr-button a {
+	margin: 0;
+}
+
+#pr #gallery .subtitle .pr-button a {
+	font-size: 8pt;
+	font-weight: normal;
+	padding: 4px 5px 2px 5px;
+}
+
+/* now for the actual bar of images */
+#pr #gallery-bar {
+	width: 100%;
+}
+
+/* modifying all special button links */
+#pr .pr-button a {
+	display: inline-block;
+	border: 1px var(--cyan) solid;
+	border-radius: var(--border-radius);
+	box-sizing: border-box;
+	padding: 3px 5px;
+	font-size: 10pt;
+}
+
+#pr .pr-button a:hover {
+	background-color: var(--cyan);
+}
+
+#pr #gallery-bar .pr-button a.enabled {
+	/* move the enabled button up on top of the disabled button */
+	position: relative;
+	top: -20px;
+}
+
+#pr #gallery-bar .pr-button a.disabled {
+	position: relative;
+	top: 20px;
+	opacity: 0.25;
+	pointer-events: none;
+}
+
+#pr #gallery-bar .pr-button {
+	height: 80px;
+}
+
+#pr #gallery-bar .pr-button a {
+	margin: 0;
+	
+	/* make this button a circle */
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	
+	/* shove the button text up a tiny bit */
+	padding-bottom: 8px;
+	
+	/* big bold arrows */
+	font-family: var(--titlefont);
+	font-size: 20pt;
+	
+	/* center the text within the link */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#pr #gallery-thumbs {
+	width: auto;
+	margin: 0 var(--spacing-sm);
+}
+
+#pr .thumb {
+	/* give the thumbnails some breathing room */
+	margin: var(--spacing-sm);
+	display: block;
+	width: var(--thumbnail-length);
+	height: var(--thumbnail-length);
+}
+
+#pr .thumb a img {
+	width: var(--thumbnail-length);
+	height: var(--thumbnail-length);
+	border-radius: 50%;
+	object-fit: cover;
+	object-position: 50% 50%;
+	font-size: 0pt;
+}
+
+
+
+
+
+
+
+/********************/
+/* BACKGROUND STUFF */
+
+#pr .bg-cover {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 0;
+	overflow: hidden;
+}
+
+#pr .bg-bubbles {
+	height: 500%;
+	width: 200%;
+	animation: bubble linear both infinite;  
+}
+
+/* smallest bubbles */
+#pr #bg-gradient-small {
+	background: linear-gradient( var(--darkcyan), var(--darkcyan) 15%, transparent 100% );
+}
+
+#pr #bg-bubbles-small-1 {
+	background: url("https://s3-us-west-2.amazonaws.com/sketchbookcafe/images/192-14-o8MAc.png") repeat;
+	animation-duration: 10s;
+}
+
+#pr #bg-bubbles-small-2 {
+	background: url("https://s3-us-west-2.amazonaws.com/sketchbookcafe/images/192-14-o8MAc.png") repeat;
+	animation-duration: 12s;
+	left: -350px;
+}
+
+/* medium bubbles */
+#pr #bg-gradient-mid {
+	background: linear-gradient( var(--cyan), var(--cyan) 30%, transparent 100% );
+}
+
+#pr #bg-bubbles-mid-1 {
+	background: url("https://s3-us-west-2.amazonaws.com/sketchbookcafe/images/191-14-hOOzZ.png") repeat;
+	animation-duration: 17s;
+}
+
+#pr #bg-bubbles-mid-2 {
+	background: url("https://s3-us-west-2.amazonaws.com/sketchbookcafe/images/191-14-hOOzZ.png") repeat;
+	animation-duration: 21s;
+	left: -590px;
+}
+
+/* large bubbles */
+#pr #bg-gradient-large {
+	background: linear-gradient( var(--lightcyan), var(--lightcyan) 45%, transparent 100% );
+}
+
+#pr #bg-bubbles-large-1 {
+	background: url("https://s3-us-west-2.amazonaws.com/sketchbookcafe/images/190-14-MKJIH.png") repeat;
+	animation-duration: 27s;
+}
+
+#pr #bg-bubbles-large-2 {
+	background: url("https://s3-us-west-2.amazonaws.com/sketchbookcafe/images/190-14-MKJIH.png") repeat;
+	animation-duration: 33s;
+	left: -470px;
+}
+
+@keyframes bubble {
+	0% { 
+		top: 0;
+	}
+	100% {
+		top: -1000px;
+	}
+}
+
+
+
+
+
+/*******************/
+/* FLEXBOX HELPERS */
+
+.flex                { display: flex; flex-wrap: wrap; align-content: flex-start; }
+
+.flex.row            { flex-direction: row;    }
+.flex.column         { flex-direction: column; }
+
+.flex.row.reverse    { flex-direction: row-reverse;    }
+.flex.column.reverse { flex-direction: column-reverse; }
+
+.flex.nowrap         { flex-wrap: nowrap; }
+
+.flex.row.left       { justify-content: flex-start; }
+.flex.row.center     { justify-content: center;     }
+.flex.row.right      { justify-content: flex-end;   }
+.flex.row.top        { align-items: flex-start; align-content: flex-start; }
+.flex.row.middle     { align-items: center;     align-content: center;     }
+.flex.row.bottom     { align-items: flex-end;   align-content: flex-end;   }
+
+.flex.column.left    { align-items: flex-start; align-content: flex-start; }
+.flex.column.center  { align-items: center;     align-content: center;     }
+.flex.column.right   { align-items: flex-end;   align-content: flex-end;   }
+.flex.column.top     { justify-content: flex-start; }
+.flex.column.middle  { justify-content: center;     }
+.flex.column.bottom  { justify-content: flex-end;   }
+
+.flex.around         { justify-content: space-around; }
+.flex.between        { justify-content: space-between; }
+.flex.evenly         { justify-content: space-evenly; }
+
+.flex.row.reverse.left      { justify-content: flex-end;   }
+.flex.row.reverse.right     { justify-content: flex-start; }
+.flex.column.reverse.top    { justify-content: flex-end;   }
+.flex.column.reverse.bottom { justify-content: flex-start; }
+
+
+
+/******************************/
+/* CHANGES TO PRESET ELEMENTS */
+
+.sbc-wrap {
+	background-color: transparent;
+	/* make the header, body, and footer be flex children */
+	display: flex;
+	flex-flow: column nowrap;
+}
+
+#sbcheader, #sbcfooter {
+	z-index: 1;
+	background-color: var(--blue);
+}
+
+.sbcheader-item:hover {
+	background-color: var(--darkcyan);
+}
+
+.sbcheader-title {
+	font-size: 9.7pt;
+}
