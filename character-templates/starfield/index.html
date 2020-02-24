@@ -175,12 +175,24 @@
 							Fan Character
 						</div>
 						{/block:fan_character}
-						<div class="views item">
-							<div class="left">
-								Views:
+						<div class="heading-far-right">
+							{block:isnotfavorite}
+							<div class="favorite button">
+								<a href="{favorite_character_url}">favorite</a>
 							</div>
-							<div class="right">
-								{views}
+							{/block:isnotfavorite}
+							{block:isfavorite}
+							<div class="unfavorite button">
+								<a href="{favorite_character_url}">unfavorite</a>
+							</div>
+							{/block:isfavorite}
+							<div class="views item">
+								<div class="left">
+									Views:
+								</div>
+								<div class="right">
+									{views}
+								</div>
 							</div>
 						</div>
 					</div>
@@ -210,7 +222,7 @@
 					</div>
 					{/block:character_permissions}
 				</div>
-				<!--{block:post_url0}
+				{block:post_url0}
 				<div class="gallery island right">
 					<div class="subtitle">
 						Gallery
@@ -220,8 +232,21 @@
 							</a>
 						</div>
 					</div>
+					<div class="grid">
+						<div class="gallery-item"><a href="{post_url0}" style="background-image: url({post_thumb_url0});"></a></div>
+						{block:post_url1}<div class="gallery-item"><a href="{post_url1}" style="background-image: url({post_thumb_url1});"></a></div>{/block:post_url1}
+						{block:post_url2}<div class="gallery-item"><a href="{post_url2}" style="background-image: url({post_thumb_url2});"></a></div>{/block:post_url2}
+						{block:post_url3}<div class="gallery-item"><a href="{post_url3}" style="background-image: url({post_thumb_url3});"></a></div>{/block:post_url3}
+						{block:post_url4}<div class="gallery-item"><a href="{post_url4}" style="background-image: url({post_thumb_url4});"></a></div>{/block:post_url4}
+						{block:post_url5}<div class="gallery-item"><a href="{post_url5}" style="background-image: url({post_thumb_url5});"></a></div>{/block:post_url5}
+						{block:post_url6}<div class="gallery-item"><a href="{post_url6}" style="background-image: url({post_thumb_url6});"></a></div>{/block:post_url6}
+						{block:post_url7}<div class="gallery-item"><a href="{post_url7}" style="background-image: url({post_thumb_url7});"></a></div>{/block:post_url7}
+						{block:post_url8}<div class="gallery-item"><a href="{post_url8}" style="background-image: url({post_thumb_url8});"></a></div>{/block:post_url8}
+						{block:post_url9}<div class="gallery-item"><a href="{post_url9}" style="background-image: url({post_thumb_url9});"></a></div>{/block:post_url9}
+					</div>
 				</div>
-				{/block:post_url0}-->
+				{/block:post_url0}
+
 				{block:hasgeneral}
 				<div class="general details island right">
 					<div class="subtitle">
